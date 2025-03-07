@@ -5,6 +5,7 @@ let currentProblem = 0;
 let correctAnswers = 0;
 let problemTimes = []; // Array to store time spent on each problem
 let startTime; // To track start time for each problem
+let currentNumbers; // To store the current problem's numbers
 
 function startQuiz() {
     timeLimit = parseInt(document.getElementById("time-limit").value);
@@ -12,41 +13,29 @@ function startQuiz() {
     currentProblem = 0;
     correctAnswers = 0;
     problemTimes = []; // Reset problem times
-    
     document.getElementById("result").innerHTML = "";
     document.getElementById("quiz-progress").innerHTML = `Problem 1 of ${numProblems}`;
     document.getElementById("timer").innerHTML = "";
-    
     generateProblem();
 }
 
 function generateProblem() {
-    const a11 = Math.floor(Math.random() * 10);
-    const a12 = Math.floor(Math.random() * 10);
-    const a21 = Math.floor(Math.random() * 10);
-    const a22 = Math.floor(Math.random() * 10);
+    const num1 = Math.floor(Math.random() * 90) + 10; // Random 2-digit number (10-99)
+    const num2 = Math.floor(Math.random() * 90) + 10; // Random 2-digit number (10-99)
     
-    const b11 = Math.floor(Math.random() * 10);
-    const b12 = Math.floor(Math.random() * 10);
-    const b21 = Math.floor(Math.random() * 10);
-    const b22 = Math.floor(Math.random() * 10);
-    
-    // Display the matrices in the input fields
-    document.getElementById("a11").value = a11;
-    document.getElementById("a12").value = a12;
-    document.getElementById("a21").value = a21;
-    document.getElementById("a22").value = a22;
-    
-    document.getElementById("b11").value = b11;
-    document.getElementById("b12").value = b12;
-    document.getElementById("b21").value = b21;
-    document.getElementById("b22").value = b22;
-    
+    currentNumbers = { num1, num2 };
+
+    // Display the problem vertically
+    document.getElementById("problem").innerHTML = `
+        <p>${num1}</p>
+        <p>${num2}</p>
+    `;
+
     // Start timer for the problem
-    startTimer(a11, a12, a21, a22, b11, b12, b21, b22);
+    startTimer(num1, num2);
 }
 
-function startTimer(a11, a12, a21, a22, b11, b12, b21, b22) {
+function startTimer(num1, num2) {
     let timeLeft = timeLimit;
     document.getElementById("timer").innerHTML = `Time Left: ${timeLeft}s`;
     
@@ -58,24 +47,17 @@ function startTimer(a11, a12, a21, a22, b11, b12, b21, b22) {
         
         if (timeLeft <= 0) {
             clearInterval(timer);
-            showAnswer(a11, a12, a21, a22, b11, b12, b21, b22);
+            showAnswer(num1, num2);
         }
     }, 1000);
 }
 
-function showAnswer(a11, a12, a21, a22, b11, b12, b21, b22) {
-    const c11 = a11 * b11 + a12 * b21;
-    const c12 = a11 * b12 + a12 * b22;
-    const c21 = a21 * b11 + a22 * b21;
-    const c22 = a21 * b12 + a22 * b22;
+function showAnswer(num1, num2) {
+    const result = num1 * num2;
     
-    // Show result one number over another
+    // Show the result automatically after time runs out
     document.getElementById("result").innerHTML = `
-        Result:
-        <p>${c11}</p>
-        <p>${c12}</p>
-        <p>${c21}</p>
-        <p>${c22}</p>
+        Answer: ${result}
     `;
     
     // Track the time spent on this problem
@@ -83,13 +65,13 @@ function showAnswer(a11, a12, a21, a22, b11, b12, b21, b22) {
     const timeSpent = (endTime - startTime) / 1000; // Time spent in seconds
     problemTimes.push(timeSpent);
 
-    // Move to next problem after a delay
+    // Move to the next problem after a delay
     currentProblem++;
     if (currentProblem < numProblems) {
         setTimeout(() => {
             document.getElementById("quiz-progress").innerHTML = `Problem ${currentProblem + 1} of ${numProblems}`;
             generateProblem();
-        }, 2000); // Wait for 2 seconds before showing next problem
+        }, 2000); // Wait for 2 seconds before showing the next problem
     } else {
         setTimeout(showReport, 2000); // Show the report after all problems are done
     }
@@ -111,32 +93,4 @@ function showReport() {
     reportHTML += `<p>Total Time Spent: ${totalTime.toFixed(2)}s</p>`;
     
     document.getElementById("result").innerHTML = reportHTML;
-}
-
-function multiplyMatrices() {
-    // This will be a fallback function in case you want to manually multiply matrices
-    // This will be used only if you want to solve the matrix manually instead of the quiz timer
-    const a11 = parseFloat(document.getElementById("a11").value);
-    const a12 = parseFloat(document.getElementById("a12").value);
-    const a21 = parseFloat(document.getElementById("a21").value);
-    const a22 = parseFloat(document.getElementById("a22").value);
-    
-    const b11 = parseFloat(document.getElementById("b11").value);
-    const b12 = parseFloat(document.getElementById("b12").value);
-    const b21 = parseFloat(document.getElementById("b21").value);
-    const b22 = parseFloat(document.getElementById("b22").value);
-    
-    const c11 = a11 * b11 + a12 * b21;
-    const c12 = a11 * b12 + a12 * b22;
-    const c21 = a21 * b11 + a22 * b21;
-    const c22 = a21 * b12 + a22 * b22;
-    
-    // Show result one number over another
-    document.getElementById("result").innerHTML = `
-        Result:
-        <p>${c11}</p>
-        <p>${c12}</p>
-        <p>${c21}</p>
-        <p>${c22}</p>
-    `;
 }
