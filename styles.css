@@ -25,18 +25,9 @@ h1 {
     text-transform: uppercase;
 }
 
-.matrix-input {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 10px 0;
-}
-
-input {
-    width: 60px;
-    padding: 8px;
-    font-size: 16px;
-    text-align: center;
+.settings input {
+    margin: 5px 0;
+    width: 80px;
     background-color: #222;
     color: #00FF00;
     border: 2px solid #00FF00;
@@ -58,13 +49,9 @@ button:hover {
     background-color: #00cc00;
 }
 
-.settings input {
-    margin: 5px 0;
-    width: 80px;
-    background-color: #222;
-    color: #00FF00;
-    border: 2px solid #00FF00;
-    border-radius: 5px;
+#problem {
+    margin-top: 20px;
+    font-size: 36px; /* Make the numbers larger */
 }
 
 #result {
