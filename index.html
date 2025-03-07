@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2x2 Matrix Multiplication</title>
+    <title>2x2 Multiplication Practice</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>2x2 Matrix Multiplication</h1>
+        <h1>2x2 Multiplication Practice</h1>
         <div class="settings">
             <label for="time-limit">Time Limit (seconds):</label>
             <input type="number" id="time-limit" value="2" min="1">
@@ -16,21 +16,7 @@
             <input type="number" id="num-problems" value="5" min="1">
             <button onclick="startQuiz()">Start Quiz</button>
         </div>
-        <div class="matrix-input">
-            <h3>Matrix A</h3>
-            <input type="number" id="a11" placeholder="A11">
-            <input type="number" id="a12" placeholder="A12">
-            <input type="number" id="a21" placeholder="A21">
-            <input type="number" id="a22" placeholder="A22">
-        </div>
-        <div class="matrix-input">
-            <h3>Matrix B</h3>
-            <input type="number" id="b11" placeholder="B11">
-            <input type="number" id="b12" placeholder="B12">
-            <input type="number" id="b21" placeholder="B21">
-            <input type="number" id="b22" placeholder="B22">
-        </div>
-        <button onclick="multiplyMatrices()">Multiply Matrices</button>
+        <div id="problem"></div>
         <div id="result"></div>
         <div id="quiz-progress"></div>
         <div id="timer"></div>
